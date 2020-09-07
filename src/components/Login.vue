@@ -15,7 +15,10 @@
       >
         <!-- 用户名 -->
         <el-form-item prop="username">
-          <el-input prefix-icon="iconfont icon-user" v-model="loginForm.username"></el-input>
+          <el-input
+            prefix-icon="iconfont icon-user"
+            v-model="loginForm.username"
+          ></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
@@ -50,10 +53,15 @@ export default {
         ],
         password: [
           {
-            required: true, message: '请输入登录密码', trigger: 'blur'
+            required: true,
+            message: '请输入登录密码',
+            trigger: 'blur'
           },
           {
-            min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur'
+            min: 6,
+            max: 15,
+            message: '长度在 6 到 15 个字符',
+            trigger: 'blur'
           }
         ]
       }
@@ -61,7 +69,7 @@ export default {
   },
   methods: {
     // 点击重置按钮，重置表单
-    resetLoginForm: function () {
+    resetLoginForm: function() {
       // console.log(this)
       this.$refs.loginFormRef.resetFields()
     },
