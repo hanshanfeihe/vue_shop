@@ -29,3 +29,8 @@ body,
 .el-pagination {
     margin-top: 15px;
 }
+
+/* 级联选择器高度 */
+.el-cascader-panel {
+    max-height: 250px !important;
+}
