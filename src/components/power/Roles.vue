@@ -14,39 +14,39 @@
         <el-table-column type="expand">
           <template slot-scope="scope">
             <el-row
-              :class="['bdbottom', i1===0?'bdtop':'','vcenter']"
+              :class="['bdbottom', i1 === 0 ? 'bdtop' : '', 'vcenter']"
               :key="item1.id"
-              v-for="(item1,i1) in scope.row.children"
+              v-for="(item1, i1) in scope.row.children"
             >
               <!-- 渲染一级权限 -->
               <el-col :span="5">
-                <el-tag @close="removeRightById(scope.row,item1.id)" closable>{{item1.authName}}</el-tag>
+                <el-tag @close="removeRightById(scope.row, item1.id)" closable>{{ item1.authName }}</el-tag>
                 <i class="el-icon-caret-right"></i>
               </el-col>
               <!-- 渲染二级权限 -->
               <el-col :span="19">
                 <el-row
-                  :class="['bdtop',i2===0?'':'bdtop','vcenter']"
+                  :class="['bdtop', i2 === 0 ? '' : 'bdtop', 'vcenter']"
                   :key="item2.id"
-                  v-for="(item2,i2) in item1.children"
+                  v-for="(item2, i2) in item1.children"
                 >
                   <el-col :span="6">
                     <el-tag
-                      @close="removeRightById(scope.row,item2.id)"
+                      @close="removeRightById(scope.row, item2.id)"
                       closable
                       type="success"
-                    >{{item2.authName}}</el-tag>
+                    >{{ item2.authName }}</el-tag>
                     <i class="el-icon-caret-right"></i>
                   </el-col>
                   <!-- 渲染三级权限 -->
                   <el-col :span="18">
                     <el-tag
                       :key="item3.id"
-                      @close="removeRightById(scope.row,item3.id)"
+                      @close="removeRightById(scope.row, item3.id)"
                       closable
                       type="warning"
-                      v-for="(item3) in item2.children"
-                    >{{item3.authName}}</el-tag>
+                      v-for="item3 in item2.children"
+                    >{{ item3.authName }}</el-tag>
                   </el-col>
                 </el-row>
                 <!-- <el-row></el-row> -->
@@ -187,13 +187,21 @@ export default {
     },
     // 删除角色权限
     async removeRightById(role, rightId) {
-      const confirmResult = await this.$confirm('此操作将永久删除该用户权限, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).catch(err => err)
-      if (confirmResult !== 'confirm') { return this.$message.info('已取消删除') }
-      const { data: res } = await this.$http.delete('roles/' + role.id + '/rights/' + rightId)
+      const confirmResult = await this.$confirm(
+        '此操作将永久删除该用户权限, 是否继续?',
+        '提示',
+        {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }
+      ).catch(err => err)
+      if (confirmResult !== 'confirm') {
+        return this.$message.info('已取消删除')
+      }
+      const { data: res } = await this.$http.delete(
+        'roles/' + role.id + '/rights/' + rightId
+      )
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.msg)
       }
@@ -210,7 +218,8 @@ export default {
     // 提交修改
     async putEditRole() {
       const { data: res } = await this.$http.put('roles/' + this.roleForm.id, {
-        roleName: this.roleForm.roleName, roleDesc: this.roleForm.roleDesc
+        roleName: this.roleForm.roleName,
+        roleDesc: this.roleForm.roleDesc
       })
       if (res.meta.status !== 200) {
         return this.$message.error('修改角色信息失败')
@@ -254,7 +263,10 @@ export default {
         ...this.$refs.treeRef.getCheckedKeys()
       ]
       const idStr = keys.join(',')
-      const { data: res } = await this.$http.post('roles/' + this.roleId + '/rights', { rids: idStr })
+      const { data: res } = await this.$http.post(
+        'roles/' + this.roleId + '/rights',
+        { rids: idStr }
+      )
       if (res.meta.status !== 200) {
         return this.$message.error('分配权限失败')
       }
@@ -265,15 +277,21 @@ export default {
     // 删除角色
     async removeRoleById(id) {
       // console.log(id)
-      const confirmResult = await this.$confirm('此操作将永久删除该角色, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).catch(err => err)
+      const confirmResult = await this.$confirm(
+        '此操作将永久删除该角色, 是否继续?',
+        '提示',
+        {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }
+      ).catch(err => err)
       // 如果用户确认删除，返回值为字符串confirm
       // 如果以后取消删除，返回值为字符串cancel
       // console.log(confirmResult)
-      if (confirmResult !== 'confirm') { return this.$message.info('已取消删除') }
+      if (confirmResult !== 'confirm') {
+        return this.$message.info('已取消删除')
+      }
       // console.log('确认了删除')
       const { data: res } = await this.$http.delete('roles/' + id)
       if (res.meta.status !== 200) {
