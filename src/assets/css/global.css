@@ -34,3 +34,16 @@ body,
 .el-cascader-panel {
     max-height: 250px !important;
 }
+
+/* 进度条 */
+.el-steps {
+    margin: 15px 0;
+}
+
+.el-step__title {
+    font-size: 13px;
+}
+
+.ql-editor {
+    min-height: 300px;
+}
